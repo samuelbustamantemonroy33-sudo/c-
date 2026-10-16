@@ -1,0 +1,57 @@
+@namespace clase.Components.ejercicio
+
+<label>Seleccionar animal: </label>
+<select @bind="tipoAnimal">
+    <option value="20">Elefantes (20)</option>
+    <option value="15">Jirafas (15)</option>
+    <option value="40">Chimpancés (40)</option>
+</select>
+
+@for (int i = 0; i < TotalAnimales; i++)
+{
+    var n = i;
+    <div>
+        Animal @(n + 1) - Años: <input type="number" @bind="edades[n]">
+    </div>
+}
+
+<button @onclick="() => mostrar = true">Calcular Porcentajes</button>
+
+@if (mostrar)
+{
+    int c1 = 0, c2 = 0, c3 = 0;
+    int total = TotalAnimales;
+
+    @for (int i = 0; i < total; i++)
+    {
+        var e = edades[i];
+
+        if (e >= 0 && e <= 1)
+        {
+            c1++;
+        }
+        else if (e > 1 && e < 3)
+        {
+            c2++;
+        }
+        else if (e >= 3)
+        {
+            c3++;
+        }
+    }
+
+    double p1 = total > 0 ? (c1 * 100.0) / total : 0;
+    double p2 = total > 0 ? (c2 * 100.0) / total : 0;
+    double p3 = total > 0 ? (c3 * 100.0) / total : 0;
+
+    <p>Porcentaje (0 a 1 año): @p1.ToString("0.00")%</p>
+    <p>Porcentaje (&gt; 1 y &lt; 3 años): @p2.ToString("0.00")%</p>
+    <p>Porcentaje (3 o más años): @p3.ToString("0.00")%</p>
+}
+
+@code {
+    int tipoAnimal = 20;
+    int TotalAnimales => tipoAnimal;
+    double[] edades = new double[40];
+    bool mostrar;
+}

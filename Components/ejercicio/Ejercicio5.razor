@@ -1,0 +1,39 @@
+@namespace clase.Components.ejercicio
+
+@for (int i = 0; i < 20; i++)
+{
+    var n = i;
+    <div>
+        Persona @(n + 1) - Edad: <input type="number" @bind="edades[n]"> Peso: <input type="number" @bind="pesos[n]">
+    </div>
+}
+
+<button @onclick="() => mostrar = true">Calcular</button>
+
+@if (mostrar)
+{
+    double sN = 0, sJ = 0, sA = 0, sV = 0;
+    int cN = 0, cJ = 0, cA = 0, cV = 0;
+
+    @for (int i = 0; i < 20; i++)
+    {
+        var e = edades[i];
+        var p = pesos[i];
+
+        if (e <= 12) { sN += p; cN++; }
+        else if (e <= 29) { sJ += p; cJ++; }
+        else if (e <= 59) { sA += p; cA++; }
+        else { sV += p; cV++; }
+    }
+
+    <p>Promedio Niños (0-12): @(cN > 0 ? sN / cN : 0)</p>
+    <p>Promedio Jóvenes (13-29): @(cJ > 0 ? sJ / cJ : 0)</p>
+    <p>Promedio Adultos (30-59): @(cA > 0 ? sA / cA : 0)</p>
+    <p>Promedio Viejos (60+): @(cV > 0 ? sV / cV : 0)</p>
+}
+
+@code {
+    double[] edades = new double[20];
+    double[] pesos = new double[20];
+    bool mostrar;
+}

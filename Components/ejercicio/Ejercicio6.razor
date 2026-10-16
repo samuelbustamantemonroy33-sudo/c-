@@ -1,0 +1,34 @@
+<p>Precio por kilo: <input type="number" @bind="precioKilo"></p>
+
+@for (int i = 0; i < 15; i++)
+{
+    var n = i;
+    <div>
+        Cliente @(n + 1) - Kilos: <input type="number" @bind="kilos[n]">
+    </div>
+}
+
+<button @onclick="() => mostrar = true">Calcular</button>
+
+@if (mostrar)
+{
+    double totalTienda = 0;
+
+    @for (int i = 0; i < 15; i++)
+    {
+        var k = kilos[i];
+        var subtotal = k * precioKilo;
+        var totalCliente = k > 10 ? subtotal * 0.85 : subtotal;
+        totalTienda += totalCliente;
+
+        <p>Cliente @(i + 1) pagará: @totalCliente</p>
+    }
+
+    <p><strong>Total de la tienda: @totalTienda</strong></p>
+}
+
+@code {
+    double precioKilo;
+    double[] kilos = new double[15];
+    bool mostrar;
+}

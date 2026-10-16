@@ -1,0 +1,39 @@
+@for (int i = 0; i < 10; i++)
+{
+    var n = i;
+    <div>
+        Día @(n + 1) - Minutos: <input type="number" step="any" @bind="tiempos[n]">
+    </div>
+}
+
+<button @onclick="() => mostrar = true">Evaluar</button>
+
+@if (mostrar)
+{
+    double suma = 0;
+    bool ningunaMayor16 = true;
+    bool alMenosUnaMayor16 = false;
+
+    @for (int i = 0; i < 10; i++)
+    {
+        var t = tiempos[i];
+        suma += t;
+
+        if (t > 16)
+        {
+            ningunaMayor16 = false;
+            alMenosUnaMayor16 = true;
+        }
+    }
+
+    var promedio = suma / 10;
+    bool apto = ningunaMayor16 || alMenosUnaMayor16 || (promedio <= 15);
+
+    <p>Promedio: @promedio minutos</p>
+    <p><strong>Resultado: @(apto ? "Apto" : "No apto")</strong></p>
+}
+
+@code {
+    double[] tiempos = new double[10];
+    bool mostrar;
+}

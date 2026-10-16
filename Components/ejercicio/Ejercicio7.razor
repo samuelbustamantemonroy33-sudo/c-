@@ -1,0 +1,40 @@
+@for (int i = 0; i < 25; i++)
+{
+    var n = i;
+    <div>
+        Auto @(n + 1) - Puntos: <input type="number" @bind="puntos[n]">
+    </div>
+}
+
+<button @onclick="() => mostrar = true">Calcular</button>
+
+@if (mostrar)
+{
+    double suma = 0;
+    double menor = puntos[0];
+    double mayor = puntos[0];
+
+    @for (int i = 0; i < 25; i++)
+    {
+        var p = puntos[i];
+        suma += p;
+
+        if (p < menor)
+        {
+            menor = p;
+        }
+        if (p > mayor)
+        {
+            mayor = p;
+        }
+    }
+
+    <p>Promedio de puntos: @(suma / 25)</p>
+    <p>Menor contaminación: @menor</p>
+    <p>Mayor contaminación: @mayor</p>
+}
+
+@code {
+    double[] puntos = new double[25];
+    bool mostrar;
+}
